@@ -34,12 +34,12 @@ import org.apache.ws.commons.schema.XmlSchemaImport;
 import org.apache.ws.commons.schema.XmlSchemaInclude;
 import org.apache.ws.commons.schema.XmlSchemaObjectCollection;
 
-import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -135,11 +135,13 @@ public class AxisMessage extends AxisDescription {
     public XmlSchemaElement getSchemaElement() {
         XmlSchemaElement xmlSchemaElement = null;
         AxisService service = getAxisOperation().getAxisService();
-        ArrayList schemas = service.getSchema();
-        for (Object schema : schemas) {
-            xmlSchemaElement = getSchemaElement((XmlSchema)schema);
-            if (xmlSchemaElement != null) {
-                break;
+        if (service != null) {
+            ArrayList schemas = service.getSchema();
+            for (Object schema : schemas) {
+                xmlSchemaElement = getSchemaElement((XmlSchema) schema);
+                if (xmlSchemaElement != null) {
+                    break;
+                }
             }
         }
         return xmlSchemaElement;
